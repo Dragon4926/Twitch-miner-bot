@@ -139,7 +139,7 @@ class Twitch(object):
                 streamer.streamer_url, headers=headers)
             response = main_page_request.text
             # logger.info(response)
-            regex_settings = "(https://static.twitchcdn.net/config/settings.*?js)"
+            regex_settings = "(https://static.twitchcdn.net/config/settings.*?js|https://assets.twitch.tv/config/settings.*?.js)"
             settings_url = re.search(regex_settings, response).group(1)
 
             settings_request = requests.get(settings_url, headers=headers)
@@ -433,7 +433,7 @@ class Twitch(object):
                                     )
                                     > 30
                                 )
-                                and streamers[index].stream.minute_watched < 7 # fix #425
+                                and streamers[index].stream.minute_watched < 1
                             ):
                                 streamers_watching.append(index)
                                 if len(streamers_watching) == 2:
@@ -508,7 +508,6 @@ class Twitch(object):
                                                     "event": Events.DROP_STATUS,
                                                     "skip_telegram": True,
                                                     "skip_discord": True,
-                                                    "skip_webhook": True,
                                                     "skip_matrix": True,
                                                 },
                                             )
@@ -521,11 +520,6 @@ class Twitch(object):
 
                                         if Settings.logger.discord is not None:
                                             Settings.logger.discord.send(
-                                                "\n".join(drop_messages),
-                                                Events.DROP_STATUS,
-                                            )
-                                        if Settings.logger.webhook is not None:
-                                            Settings.logger.webhook.send(
                                                 "\n".join(drop_messages),
                                                 Events.DROP_STATUS,
                                             )
