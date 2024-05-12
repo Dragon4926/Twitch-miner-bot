@@ -2,7 +2,6 @@
 
 import os
 import logging
-from dotenv import load_dotenv
 from colorama import Fore
 from TwitchChannelPointsMiner import TwitchChannelPointsMiner
 from TwitchChannelPointsMiner.logger import LoggerSettings, ColorPalette
@@ -15,7 +14,7 @@ from TwitchChannelPointsMiner.classes.Pushover import Pushover
 from TwitchChannelPointsMiner.classes.Settings import Priority, Events, FollowersOrder
 from TwitchChannelPointsMiner.classes.entities.Bet import Strategy, BetSettings, Condition, OutcomeKeys, FilterCondition, DelayMode
 from TwitchChannelPointsMiner.classes.entities.Streamer import Streamer, StreamerSettings
-load_dotenv()
+
 twitch_miner = TwitchChannelPointsMiner(
     username=os.getenv("user"),
     password=os.getenv("passw"),           # If no password will be provided, the script will ask interactively
